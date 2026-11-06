@@ -313,38 +313,9 @@ svg {
   transition: opacity 0.25s, scale 0.25s;
 }
 
-.cursor.is-hidden {
-  opacity: 0;
-  scale: 0.2;
-}
-
-/* ---------- Revelação (versão sincera) ---------- */
+/* Bloco de título (hero, sobre, lema) */
 .reveal {
-  --r: 0px;
-  --x: 50%;
-  --y: 50%;
   position: relative;
-  display: grid;
-}
-
-.reveal > * {
-  grid-area: 1 / 1;
-}
-
-/* A camada de trás passa das bordas do bloco para o círculo não sair cortado. */
-.reveal__back {
-  --pad: 170px;
-  margin: calc(var(--pad) * -1);
-  padding: var(--pad);
-  background: var(--accent);
-  color: var(--bg);
-  clip-path: circle(var(--r) at calc(var(--x) + var(--pad)) calc(var(--y) + var(--pad)));
-  pointer-events: none;
-}
-
-html:not(.has-mouse) .reveal {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* ---------- Hero ---------- */
@@ -440,30 +411,6 @@ html:not(.has-mouse) .reveal {
 
 .hero__since {
   color: var(--text);
-}
-
-.hint {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--dim);
-}
-
-.hint__icon {
-  color: var(--accent);
-  font-size: 14px;
-}
-
-.hint--touch {
-  display: none;
-}
-
-html:not(.has-mouse) .hint--mouse {
-  display: none;
-}
-
-html:not(.has-mouse) .hint--touch {
-  display: inline;
 }
 
 /* ---------- Seções ---------- */

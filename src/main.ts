@@ -184,28 +184,10 @@ document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((btn) => {
   })
 })
 
-// ---------- Cursor e revelação da versão sincera ----------
+// ---------- Cursor (bolinha laranja que segue o mouse) ----------
 const cursor = document.getElementById('cursor') as HTMLElement
-const reveals = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
-const REVEAL_R = 150
 const pointer = { x: -100, y: -100 }
 const dot = { x: -100, y: -100 }
-let active: HTMLElement | null = null
-
-function setOrigin(el: HTMLElement, x: number, y: number): void {
-  const rect = el.getBoundingClientRect()
-  el.style.setProperty('--x', `${x - rect.left}px`)
-  el.style.setProperty('--y', `${y - rect.top}px`)
-}
-
-function open(el: HTMLElement, radius: number): void {
-  gsap.to(el, { '--r': `${radius}px`, duration: reduceMotion ? 0 : 0.5, ease: 'power3.out', overwrite: 'auto' })
-}
-
-function close(el: HTMLElement): void {
-  gsap.to(el, { '--r': '0px', duration: reduceMotion ? 0 : 0.4, ease: 'power3.inOut', overwrite: 'auto' })
-  el.classList.remove('is-open')
-}
 
 if (finePointer) {
   window.addEventListener('pointermove', (e) => {
@@ -213,42 +195,11 @@ if (finePointer) {
     pointer.y = e.clientY
   })
 
-  reveals.forEach((el) => {
-    el.addEventListener('pointerenter', () => {
-      active = el
-      setOrigin(el, pointer.x, pointer.y)
-      open(el, REVEAL_R)
-      cursor.classList.add('is-hidden')
-    })
-    el.addEventListener('pointerleave', () => {
-      if (active === el) active = null
-      close(el)
-      cursor.classList.remove('is-hidden')
-    })
-  })
-
   gsap.ticker.add(() => {
     const ease = reduceMotion ? 1 : 0.2
     dot.x += (pointer.x - dot.x) * ease
     dot.y += (pointer.y - dot.y) * ease
     cursor.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0)`
-    // O círculo segue o ponteiro mesmo enquanto a página rola.
-    if (active) setOrigin(active, dot.x, dot.y)
-  })
-} else {
-  // Toque: abre um círculo no centro do bloco, grande o bastante para mostrar todo o texto; outro toque fecha.
-  reveals.forEach((el) => {
-    el.addEventListener('click', () => {
-      if (el.classList.contains('is-open')) {
-        close(el)
-        return
-      }
-      const rect = el.getBoundingClientRect()
-      el.style.setProperty('--x', `${rect.width / 2}px`)
-      el.style.setProperty('--y', `${rect.height / 2}px`)
-      el.classList.add('is-open')
-      open(el, Math.hypot(rect.width, rect.height) / 2 + 16)
-    })
   })
 }
 
