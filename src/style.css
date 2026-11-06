@@ -442,27 +442,6 @@ html:not(.has-mouse) .reveal {
   color: var(--text);
 }
 
-.progress {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.progress__bar {
-  width: min(180px, 30vw);
-  height: 4px;
-  overflow: hidden;
-  border-radius: 4px;
-  background: var(--line);
-}
-
-.progress__fill {
-  display: block;
-  width: 0;
-  height: 100%;
-  background: var(--accent);
-}
-
 .hint {
   display: flex;
   align-items: center;
@@ -537,10 +516,6 @@ html:not(.has-mouse) .hint--touch {
   letter-spacing: -0.02em;
 }
 
-.about .reveal__back {
-  padding-right: 0.2em;
-}
-
 /* O que eu faço */
 .do__list {
   border-top: 1px solid var(--line);
@@ -548,7 +523,7 @@ html:not(.has-mouse) .hint--touch {
 
 .do__item {
   display: grid;
-  grid-template-columns: 40px 1fr;
+  grid-template-columns: 40px minmax(0, 1fr);
   gap: 4px 16px;
   align-items: center;
   padding: 26px 0;

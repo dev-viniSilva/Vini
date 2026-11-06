@@ -252,39 +252,8 @@ if (finePointer) {
   })
 }
 
-// ---------- Barra "carregando skills" (nunca chega a 100%) ----------
-function runProgress(): void {
-  const fill = document.getElementById('progress-fill')
-  const num = document.getElementById('progress-num')
-  if (!fill || !num) return
-  const state = { v: 0 }
-  const render = () => {
-    fill.style.width = `${state.v}%`
-    num.textContent = `${Math.round(state.v)}%`
-  }
-  if (reduceMotion) {
-    state.v = 87
-    render()
-    return
-  }
-  gsap.to(state, {
-    v: 87,
-    duration: 2.4,
-    delay: 0.6,
-    ease: 'power2.out',
-    onUpdate: render,
-    onComplete: () => {
-      // Fica "quase pronto" para sempre, porque aprender não termina.
-      const wiggle = () =>
-        gsap.to(state, { v: gsap.utils.random(88, 99, 1), duration: 1.2, ease: 'power1.inOut', onUpdate: render, onComplete: () => gsap.delayedCall(gsap.utils.random(1.5, 3.5), wiggle) })
-      gsap.delayedCall(1.5, wiggle)
-    },
-  })
-}
-
 // ---------- Entrada do hero ao abrir a página ----------
 function playHeroIntro(): void {
-  runProgress()
   const reveal = () => document.documentElement.classList.remove('is-loading')
   if (reduceMotion) {
     reveal()
